@@ -1,0 +1,213 @@
+ {% extends "base.html" %}
+  {% load static %}
+
+  {% block content  %}
+{% comment %}    
+  <h1>Latest News </h1>
+   <div class="news-list">  
+
+    {% for story in stories %}
+     <section class="news-item">
+      {% if story.image %}
+      <img src="{{story.image.url}}" alt="{{story.title}}">
+    {% endif %}
+       
+      `
+        <p> {{story.content|truncatewords:30}}</p>
+    <p><small> {{story.pub_date|date:"d,F,Y"}}|{{ story.category}}</small></p>
+    
+    <a href="">Read more</a>
+     </section>
+
+{% empty %}
+<p>No news stories available.</p>
+{% endfor %}
+
+    </div>  {% endcomment %}
+
+
+    <div class="container">
+         <div class="row">
+     <div class="col-3">
+      {% for story in sport_news %}
+      <section class="grid_items">
+        <p><small>
+          {{story.pub_date|date:"d,F,Y"}}</small></p>
+         <h4>{{story.title}}</h4> <hr>
+                {% endfor %}
+
+        </section>
+     </div>
+
+     <div class="col-6">
+       {% for story in banner_news%}
+        {% if story.image %}
+        <img class="w-100" src="{{story.image.url}}" alt="{{story.title}}">
+        <div class="p-3 bg-secondary"><h2>{{story.title|truncatewords:30}}</h2>
+        <p><small>{{story.pub_date|date:"d,F,Y"}} | {{ story.category}}</small></p>
+
+           {% endif %}
+              {% endfor %}
+     </div>
+    </div>
+
+
+        <div class="col-3">
+  {% for story in  politics_news%}
+  <aside class=" d-flex">
+
+        <main style="flex: 2">
+          <h4>{{story.title|truncatewords:5}}</h4> 
+          <p>{{ story.category}}</p>
+        </main>
+
+        <section style="flex: 1">
+          {% if story.image %}
+          <img style="width:100%; height:80px; object-fit:cover" src="{{story.image.url}}"
+           alt="{{story.title}}">
+          {% endif %}
+        </section>
+              </aside>
+           <hr>
+        {% endfor %} 
+
+     </div>
+      </div>
+     </div>
+
+<div id="gridCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+
+    {% for story in slider_news %}
+      {% if forloop.counter0|divisibleby:4 %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <div class="row">
+      {% endif %}
+
+            <div class="col-md-3">
+              <div class="card h-100">
+                <img src="{{ story.image.url }}" class="card-img-top" alt="{{ story.title }}">
+                <div class="card-body">
+                  <h5 class="card-title">{{ story.title|truncatewords:5 }}</h5>
+                  <p class="card-text">{{ story.content|truncatewords:15 }}</p>
+                </div>
+              </div>
+            </div>
+
+      {% if forloop.counter|divisibleby:4 or forloop.last %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+  </div>
+
+  <button class="carousel-control-prev" type="button" data-bs-target="#gridCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#gridCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+   
+    <main class="container my-5">
+      <section class="row">
+        <aside class="col-6">
+          <h2>General News</h2>
+<div id="sportsCarousel" class="carousel slide mb-5" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for story in carousel_news %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            {% if story.image %}
+            <img src="{{ story.image.url }}" class="d-block w-100" alt="{{ story.title }}">
+            {% endif %}
+            <div class="carousel-caption bg-dark bg-opacity-50 p-3 rounded">
+                    <a href="{% url 'blog' story.id %}"><h4>{{story.title}}</h4> </a>
+
+                   <p>{{ story.content|truncatewords:20}}</p>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#sportsCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#sportsCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+      
+    <div class="row"><h2>Political News</h2>
+        {% for story in carousel_news2 %}
+        <div class="col-4 d-flex">
+ <main style="flex: 2">
+          <h4>{{story.title|truncatewords:5}}</h4> 
+          <p>{{ story.category}}</p>
+        </main>
+
+        <section style="flex: 1">
+          {% if story.image %}
+          <img style="width:100%; height:80px; object-fit:cover" src="{{story.image.url}}"
+           alt="{{story.title}}">
+          {% endif %}
+        </section>
+
+        </div>
+        {% endfor %}
+    </div>
+       
+  </aside>
+
+<div class="col-3">
+<h1>Latest Politics</h1>
+  {% for story in  politics_news2%}
+  <aside class=" d-flex">
+
+        <main style="flex: 2">
+          <h4>{{story.title|truncatewords:5}}</h4> 
+          <p>{{ story.category}}</p>
+        </main>
+
+        <section style="flex: 1">
+          {% if story.image %}
+          <img style="width:100%; height:80px; object-fit:cover" src="{{story.image.url}}"
+           alt="{{story.title}}">
+          {% endif %}
+        </section>
+              </aside>
+        {% endfor %}
+        </div>
+   
+     
+     
+    
+
+  <aside class="col-3">
+        <h2>Advertisement</h2>
+        <img style="width:100%; height:200px" src="{% static 'C:\Users\DELL\Desktop\BLOG\post\static\gtbank.jpeg' %}"
+         alt="Ad" class="img-fluid">
+
+         <h2>video</h2>
+           <iframe width="100%" height="316" src="https://www.youtube.com/embed/VZwHrpX8IBM" 
+           title="737 Moments - The Music Video" frameborder="0" allow="accelerometer; autoplay;
+            clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+           referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </aside>
+
+           </section>
+      </main>
+      
+       <div style="width:50%; margin:0 auto; padding:10px;">
+        <img src="{% static 'C:\Users\DELL\Desktop\BLOG\post\static\opay.jpeg' %}"
+         alt="Ad" class="w-100">
+       </div>
+     
+
+  {% endblock %}
+
+
+     

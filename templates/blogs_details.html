@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+  {% load static %}
+
+  {% block content  %}
+  <h1>{{blog.title}}</h1>
+  <p><small>{{blog.pub_date|date:"d,F,Y"}} | {{ blog.category}}</small></p>
+  {% if blog.image %}
+  <img src="{{blog.image.url}}" alt="{{blog.title}}" class="img-fluid">
+  {% endif %}
+  <p>{{blog.author}}</p>
+  <p>{{blog.content|linebreaks}}</p>
+  {% endblock %}

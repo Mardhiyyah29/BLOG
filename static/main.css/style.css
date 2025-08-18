@@ -1,0 +1,20 @@
+.news-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.news-list section{
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px;
+}
+.news-list section img{
+    width: 100%;
+    height: auto;
+}
+.news-list section p{
+    margin: 5px 0;
+}
+.news-list section p small{
+    color: #999;
+    font-size: 0.8em;
+}
