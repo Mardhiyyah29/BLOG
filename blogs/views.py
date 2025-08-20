@@ -24,12 +24,31 @@ def Home(request):
                                         'politics_news2':politics_news2})
                                         
 
-def Category_article(request):
-    return render(request, 'category_article.html')
+def Category_article(request, slug):
+    category=get_object_or_404(Category,slug=slug )
+    articles = Blogs.objects.filter(category=category, is_published=True).order_by('-pub_date')
+    categories = Category.objects.all()
+    return render(request, 'category_article.html', {'category': category, 'articles': articles,
+                                                       'categories': categories})
 
-def Blogs_details(request,id):
-    blog=get_object_or_404(Blogs, id=id)
+def Blogs_details(request,slug):
+    blog=get_object_or_404(Blogs,slug=slug, is_published=True)
     Categories = Category.objects.all()
     return render(request, 'blogs_details.html', {'blog': blog, 'Categories': Categories})
 
 
+def About(request):
+    return render(request, 'about.html')
+
+def Categories(request):
+    categories = Category.objects.all()
+    return render(request, 'categories.html', {'categories': categories})
+
+def Contact(request):
+    return render(request, 'contact.html')
+
+def Privacy(request):
+    return render(request, 'privacy.html')
+
+def Terms(request):
+    return render(request, 'terms.html')
