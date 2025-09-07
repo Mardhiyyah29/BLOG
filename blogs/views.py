@@ -2,6 +2,7 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Blogs, Category
 
+
 # Create your views here.
 def Home(request):
     stories = Blogs.objects.filter(is_published=True).order_by('-pub_date')

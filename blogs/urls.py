@@ -11,7 +11,7 @@ urlpatterns = [
 
 
 
-    path('Blog/<slug:slug>/', views.Blogs_details, name='blog'),
-    path('Category/<slug:slug>/', views.Category_article,name='category_article'),
+    path('blog/<slug:slug>/', views.Blogs_details, name='blog'),
+    path('category/<slug:slug>/', views.Category_article,name='category_article'),
     
 ]
