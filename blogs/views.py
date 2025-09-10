@@ -41,7 +41,7 @@ def Blogs_details(request, slug):
     categories = Category.objects.all()
     comments = blog.comments.order_by('-pub_date')
     comment_form = CommentForm()
-    return render(request, 'blogs/blog_details.html', {
+    return render(request, 'blog_details.html', {
         'blog': blog,
         'categories': categories,
         'comments': comments,
