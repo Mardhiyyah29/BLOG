@@ -1,6 +1,9 @@
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from .models import Blogs, Category
+from .forms import CommentForm
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
@@ -32,11 +35,34 @@ def Category_article(request, slug):
     return render(request, 'category_article.html', {'category': category, 'articles': articles,
                                                        'categories': categories})
 
-def Blogs_details(request,slug):
-    blog=get_object_or_404(Blogs,slug=slug, is_published=True)
-    Categories = Category.objects.all()
-    return render(request, 'blogs_details.html', {'blog': blog, 'Categories': Categories})
+    
+def Blogs_details(request, slug):
+    blog = get_object_or_404(Blogs, slug=slug, is_published=True)
+    categories = Category.objects.all()
+    comments = blog.comments.order_by('-pub_date')
+    comment_form = CommentForm()
+    return render(request, 'blogs/blog_details.html', {
+        'blog': blog,
+        'categories': categories,
+        'comments': comments,
+        'comment_form': comment_form
+    })
 
+              
+               
+                
+
+def post_comment(request, slug):
+    article = get_object_or_404(Blogs, slug=slug, is_published=True)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.article = article
+            comment.author = request.user if request.user.is_authenticated else None
+            comment.save()
+            return redirect('article_detail', slug=article.slug)
+    return redirect('article_detail', slug=article.slug)
 
 def About(request):
     return render(request, 'about.html')

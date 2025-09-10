@@ -35,9 +35,9 @@
         <p><small>
           {{story.pub_date|date:"d,F,Y"}}</small></p>
          <a href="{% url 'blog' story.slug %}"><h4>{{story.title}}</h4> </a>
-          <hr>
-                 {% endfor %} 
+          <hr>  
         </section> 
+        {% endfor %} 
      </div>
 
      <div class="col-6">

@@ -1,5 +1,6 @@
 from django.urls import path,include
 from . import views 
+from .views import post_comment
 
 urlpatterns = [
     path('', views.Home,name='home'),
@@ -13,5 +14,7 @@ urlpatterns = [
 
     path('blog/<slug:slug>/', views.Blogs_details, name='blog'),
     path('category/<slug:slug>/', views.Category_article,name='category_article'),
+    path('article/<slug:slug>/comment/', views.post_comment, name='post_comment'),  # New URL pattern for adding comments
+
     
 ]
