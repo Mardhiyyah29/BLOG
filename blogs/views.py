@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 
 
+
 # Create your views here.
 def Home(request):
     stories = Blogs.objects.filter(is_published=True).order_by('-pub_date')
@@ -41,7 +42,7 @@ def Blogs_details(request, slug):
     categories = Category.objects.all()
     comments = blog.comments.order_by('-pub_date')
     comment_form = CommentForm()
-    return render(request, 'blog_details.html', {
+    return render(request, 'blogs_details.html', {
         'blog': blog,
         'categories': categories,
         'comments': comments,
@@ -49,9 +50,6 @@ def Blogs_details(request, slug):
     })
 
               
-               
-                
-
 def post_comment(request, slug):
     article = get_object_or_404(Blogs, slug=slug, is_published=True)
     if request.method == 'POST':
@@ -60,10 +58,12 @@ def post_comment(request, slug):
             comment = form.save(commit=False)
             comment.article = article
             comment.author = request.user if request.user.is_authenticated else None
+            comment.is_approved = False  # New comments are not approved by default
             comment.save()
-            return redirect('article_detail', slug=article.slug)
-    return redirect('article_detail', slug=article.slug)
-
+            return redirect('blog', slug=article.slug)
+    return redirect('blog', slug=article.slug)
+             
+           
 def About(request):
     return render(request, 'about.html')
 

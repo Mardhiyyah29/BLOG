@@ -12,6 +12,28 @@
   {% endif %}
   <p>{{blog.author}}</p>
   <p>{{blog.content|linebreaks}}</p>
+
+
+<h3>Comments</h3>
+<div>
+{% if comments %}
+{% for comments in comments %}
+<section>
+  <p><strong>{{comments.author|default:"Anonymous"}}</strong> said:
+      <br>
+       {{comments.content}} <br>
+    <small class="text-danger"> <em>{{comments.pub_date|timesince }} ago</em></small></p>
+
+  {% if not comments.is_approved %}
+  <p><em>Your comment is awaiting approval.</em></p>
+  {% endif %}
+</section>
+{% endfor %}
+{% else %}
+<p>No comments yet. Be the first to comment!</p>
+{% endif %}
+</div>
+  <hr>
  <h3>Add a Comment</h3>
 <form method="post" action="{% url 'post_comment' blog.slug %}" class="mb-4">
     {% csrf_token %}
@@ -19,8 +41,35 @@
     <button type="submit" class="btn btn-primary">Submit Comment</button>
 </form>
   </div>
-  </div>
+
+  <div class="col-4">
+     <div
+      style=
+       'margin:35%;margin-top:30%;'></div>
+        <img src="{% static "big images.jpeg" %}"style="width:100%;" alt="">
+      {% comment %} <h4>Blog Calender</h4> {% endcomment %}
+            <div id="calendar">
+            </div>
     </div>
+  </div>
+</div>
+</div>
+
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+
+    
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth'
+    });
+    calendar.render();
+  });
+</script>
+  
 
    
   {% endblock %}

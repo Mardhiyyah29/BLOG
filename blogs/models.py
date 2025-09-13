@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils.text import slugify
 
+
 # Create your models here.
 class Category(models.Model):
     slug=models.SlugField(max_length=100, unique=True,blank=True,null=True)
@@ -31,10 +32,13 @@ class Blogs(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(Blogs, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL,null=True, blank=True)
     content = models.TextField()
     pub_date = models.DateTimeField(auto_now_add=True)
     is_approved = models.BooleanField(default=False)
 
-    def __str__(self):
-         return f"Comment by {self.author|default:'Anonymous'} on {self.blog}"
+        
+
+    def ___str___(self):
+        author_name = self.author.username if self.author else "Anonymous"
+        return f"Comment by {author_name} on {self.article}"

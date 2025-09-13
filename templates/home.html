@@ -33,7 +33,7 @@
       {% for story in sport_news %}
       <section class="grid_items">
         <p><small>
-          {{story.pub_date|date:"d,F,Y"}}</small></p>
+          {{story.pub_date|timesince}} ago</small></p>
          <a href="{% url 'blog' story.slug %}"><h4>{{story.title}}</h4> </a>
           <hr>  
         </section> 
