@@ -43,11 +43,8 @@
   </div>
 
   <div class="col-4">
-     <div
-      style=
-       'margin:35%;margin-top:30%;'></div>
+     <div style='margin:35%;margin-top:30%;'></div>
         <img src="{% static "big images.jpeg" %}"style="width:100%;" alt="">
-      {% comment %} <h4>Blog Calender</h4> {% endcomment %}
             <div id="calendar">
             </div>
     </div>
@@ -71,5 +68,17 @@
 </script>
   
 
+
+<div>
+      {% for story in related_stories %}
+      <section class="grid-items">
+        <p><small>
+          {{ story.pub_date|timesince }}ago
+        </small></p>
+    <a href="{% url 'blog_details' story.slug %}"><h4>{{story.title|truncatewords:"9"}}</h4></a>
+    <hr>
+  </section>
+    {% endfor %}
+    </div>
    
   {% endblock %}

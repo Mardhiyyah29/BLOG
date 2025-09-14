@@ -20,13 +20,13 @@ def Home(request):
     carousel_news = Blogs.objects.filter(is_published=True).order_by('-pub_date')[:5]
     carousel_news2 = Blogs.objects.filter(is_published=True).order_by('-pub_date')[:3]
     politics_news2 = Blogs.objects.filter(is_published=True).order_by('-pub_date')[:5]
-
+    related_stories = Blogs.objects.filter(is_published=True).order_by('-pub_date')[:5]
 
     return render(request,'home.html', {'stories': stories, 'categories': categories, 
                                         'sport_news':sport_news,'banner_news':banner_news, 'politics_news'
                                         :politics_news, 'slider_news':slider_news,'carousel_news':
                                         carousel_news,'carousel_news2':carousel_news2,
-                                        'politics_news2':politics_news2})
+                                        'politics_news2':politics_news2,'related_stories':related_stories})
                                         
 
 def Category_article(request, slug):
