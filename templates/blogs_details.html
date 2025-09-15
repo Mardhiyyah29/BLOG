@@ -43,10 +43,24 @@
   </div>
 
   <div class="col-4">
-     <div style='margin:35%;margin-top:30%;'></div>
-        <img src="{% static "big images.jpeg" %}"style="width:100%;" alt="">
+            <img src="{% static "big images.jpeg" %}"style="width:100%;margin-bottom:10%;" alt="">
             <div id="calendar">
             </div>
+
+
+             <div>
+      {% for story in related_stories %}
+      <section class="grid-items">
+        <p><small>
+          {{ story.pub_date|timesince }}ago
+          
+
+        </small></p>
+    <a href="{% url 'blog' story.slug %}"><h4>{{story.title|truncatewords:"9"}}</h4></a>
+    <hr>
+  </section>
+    {% endfor %}
+    </div>  
     </div>
   </div>
 </div>
@@ -56,29 +70,9 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
 
-    
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth'
-    });
-    calendar.render();
-  });
-</script>
+
+
+
+
   
-
-
-<div>
-      {% for story in related_stories %}
-      <section class="grid-items">
-        <p><small>
-          {{ story.pub_date|timesince }}ago
-        </small></p>
-    <a href="{% url 'blog_details' story.slug %}"><h4>{{story.title|truncatewords:"9"}}</h4></a>
-    <hr>
-  </section>
-    {% endfor %}
-    </div>
-   
   {% endblock %}

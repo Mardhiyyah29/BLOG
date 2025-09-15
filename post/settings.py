@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i1t4mc14&w=+#f#pxd!#&hp*g4qi1p3j(yu76+w_+%_jo@em1g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['blog-1-s0l9.onrender.com']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -38,8 +41,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blogs',  # Assuming 'blog' is the app name
+    'cloudinary',
+    'cloudinary_storage',
      
 ]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dnf7cmqyi',
+    'API_KEY': '229387932852137',
+    'API_SECRET': 'W0DaKA05MlgJu-zscIDVPlVH_Xs',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 
 MIDDLEWARE = [
      'whitenoise.middleware.WhiteNoiseMiddleware',

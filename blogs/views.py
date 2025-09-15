@@ -39,6 +39,12 @@ def Category_article(request, slug):
     
 def Blogs_details(request, slug):
     blog = get_object_or_404(Blogs, slug=slug, is_published=True)
+
+    related_stories = (
+        Blogs.objects.filter(category=blog.category)
+        .exclude(slug=slug)
+        .order_by('-pub_date')[:5]
+    )       
     categories = Category.objects.all()
     comments = blog.comments.order_by('-pub_date')
     comment_form = CommentForm()
@@ -46,7 +52,8 @@ def Blogs_details(request, slug):
         'blog': blog,
         'categories': categories,
         'comments': comments,
-        'comment_form': comment_form
+        'comment_form': comment_form,
+        'related_stories':related_stories
     })
 
               
