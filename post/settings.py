@@ -14,7 +14,7 @@ from pathlib import Path
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,10 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-i1t4mc14&w=+#f#pxd!#&hp*g4qi1p3j(yu76+w_+%_jo@em1g'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ["blog-1-s0l9.onrender.com", "127.0.0.1", "localhost",]
-
+DEBUG = True
+ALLOWED_HOSTS = ["blog-1-s0l9.onrender.com", "127.0.0.1", "localhost"]
 
 # Application definition
 
@@ -46,17 +44,21 @@ INSTALLED_APPS = [
      
 ]
 
+
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dnf7cmqyi',
-    'API_KEY': '229387932852137',
-    'API_SECRET': 'W0DaKA05MlgJu-zscIDVPlVH_Xs',
+    'CLOUD_NAME': os.getenv("CLOUDINARY_CLOUD_NAME", "dnf7cmqyi"),
+    'API_KEY': os.getenv("CLOUDINARY_API_KEY", "229387932852137"),
+    'API_SECRET': os.getenv("CLOUDINARY_API_SECRET", "W0DaKA05MlgJu-zscIDVPlVH_Xs"),
 }
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
+
 MIDDLEWARE = [
-     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
